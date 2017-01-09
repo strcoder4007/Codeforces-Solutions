@@ -1,0 +1,7 @@
+str = input()
+str = str.replace('{','')
+str = str.replace('}','')
+str = str.replace(', ','')
+mylist = list(str)
+mylist = list(set(mylist))
+print(len(mylist))
