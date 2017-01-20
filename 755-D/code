@@ -1,0 +1,84 @@
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <complex>
+#include <math.h>
+#include <set>
+#include <vector>
+#include <map>
+#include <queue>
+#include <stdio.h>
+#include <stack>
+#include <algorithm>
+#include <ctime>
+#include <memory.h>
+#include <bitset>
+#include <climits>
+#include <iomanip>
+
+#define F first
+#define S second
+#define endl "\n"
+#define pb push_back
+#define mp make_pair
+#define bs 1000000007
+#define pi 3.141592653589793
+#define y1 kjdfshnvoavaofobiopj
+#define ends yryrqayrehojoborolo
+using namespace std;
+
+long long n, k, fen[1000010], start, ans;
+
+void update(long long p,long long val)
+{
+	for(long long i = p; i <= n; i += i & -i)
+		fen[i] += val;
+}
+long long sum(long long p)
+{
+	long long ans = 0;
+	for(long long i = p; i; i -= i & -i)
+		ans += fen[i];
+	return ans;
+}
+
+long long sum(long long l,long long r)
+{
+	return sum(r)-sum(l-1);
+}
+
+int main(){
+//freopen("input.txt", "r", stdin);
+//freopen("output.txt", "w", stdout);
+ios_base::sync_with_stdio(0);
+cin.tie(0);
+
+cin>>n>>k;
+k = min(k, n-k);
+start = ans = 1;
+for(long long i = 1; i <= n; i++)
+{
+	long long cnt = 0, l = start, r = (start+k)%n;
+	if(r == 0)
+	r = n;
+	long long ll = (l+1)%n, rr = (r-1)%n;
+	if(ll == 0)
+		ll = n;
+	if(rr%n == 0)
+		rr = 0;
+	//cout<<l<<" "<<r<<" "<<ll<<" "<<rr<<endl;
+	if(rr < ll)
+		cnt = sum(ll, n) + sum(1, rr);
+	else
+		cnt = sum(ll, rr);
+	update(l, 1);
+	update(r, 1);
+	++cnt;
+	start = r;
+	ans += cnt;
+	//cout<<start<<" "<<cnt<<" "<<ans<<" "<<l<<" "<<r<<" "<<sum(l, n)<<" "<<max(0, sum(1, r-1))<<endl;
+	cout<<ans<<" ";
+}
+cout<<endl;
+
+return 0;}
